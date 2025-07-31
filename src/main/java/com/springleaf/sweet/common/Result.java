@@ -20,6 +20,12 @@ public class Result<T> {
         this.data = data;
     }
 
+    public Result(ResultCodeEnum resultCodeEnum, T data) {
+        this.code = resultCodeEnum.getCode();
+        this.message = resultCodeEnum.getMessage();
+        this.data = data;
+    }
+
     public static <T> Result<T> success(T data) {
         return new Result<>(ResultCodeEnum.SUCCESS.getCode(), ResultCodeEnum.SUCCESS.getMessage(), data);
     }
@@ -28,14 +34,19 @@ public class Result<T> {
         return new Result<>(ResultCodeEnum.SUCCESS.getCode(), ResultCodeEnum.SUCCESS.getMessage(), null);
     }
 
+    public static <T> Result<T> success(String message) {
+        return new Result<>(ResultCodeEnum.SUCCESS.getCode(), message, null);
+    }
+
     public static <T> Result<T> error(String message) {
         return new Result<>(ResultCodeEnum.ERROR.getCode(), message, null);
     }
 
-    public Result(ResultCodeEnum resultCodeEnum, T data) {
-        this.code = resultCodeEnum.getCode();
-        this.message = resultCodeEnum.getMessage();
-        this.data = data;
+    public static <T> Result<T> error(ResultCodeEnum resultCodeEnum) {
+        return new Result<>(resultCodeEnum.getCode(), resultCodeEnum.getMessage(), null);
     }
 
+    public static <T> Result<T> error(Integer code, String message) {
+        return new Result<>(code, message, null);
+    }
 }
