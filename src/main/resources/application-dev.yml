@@ -4,32 +4,34 @@ spring:
   jackson:
     time-zone: GMT+8
   datasource:
-    #连接到本地计算机上的 MySQL 数据库，数据库名称为 blog，使用 Unicode 编码和 UTF-8 字符集，同时设置时区为 UTC，以确保时间的准确性和字符的正确显示。
+    #连接到本地计算机上的 MySQL 数据库，数据库名称为 sweet-moments，使用 Unicode 编码和 UTF-8 字符集，同时设置时区为 UTC，以确保时间的准确性和字符的正确显示。
     #useSSL=false：这个参数的设置表示在与 MySQL 数据库建立连接时不启用 SSL 加密
     url: jdbc:mysql://localhost:3306/sweet-moments?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimeZone=UTC
     username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
+  # Redis配置
+  redis:
+    sdk:
+      host: localhost
+      port: 6379
+      database: 0
+      timeout: 5000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-wait: -1ms
+          max-idle: 8
+          min-idle: 0
+
 mybatis:
   configuration:
     mapUnderscoreToCamelCase: true
 logging:
   level:
-    com.springleaf.gotodo.mapper: DEBUG
+    com.springleaf.sweet.mapper: DEBUG
     org.apache.ibatis: DEBUG
     org.apache.ibatis.logging.stdout.StdOutImpl: DEBUG
-  # Redis配置
-  redis:
-    host: localhost
-    port: 6379
-    database: 0
-    timeout: 5000ms
-    lettuce:
-      pool:
-        max-active: 8
-        max-wait: -1ms
-        max-idle: 8
-        min-idle: 0
 
 # Sa-Token配置
 sa-token:
@@ -37,8 +39,6 @@ sa-token:
   token-name: sweet
   # token有效期，单位s 默认30天, -1代表永不过期
   timeout: 2592000
-  # token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
-  activity-timeout: -1
   # 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
   is-concurrent: true
   # 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token)

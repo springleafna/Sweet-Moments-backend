@@ -10,7 +10,12 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:5173") // 精确匹配前端地址
+                .allowedOrigins(
+                    "http://localhost:5173",     // Vite开发服务器
+                    "http://localhost:3000",     // 备用开发端口
+                    "http://127.0.0.1:5173",     // 备用本地地址
+                    "http://127.0.0.1:3000"      // 备用本地地址
+                )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true)
